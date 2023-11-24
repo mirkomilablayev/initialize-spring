@@ -1,4 +1,4 @@
-package com.example.config.jwt;
+package com.example.configuration.jwt;
 
 
 import com.example.entity.User;

@@ -1,8 +1,8 @@
-package com.example.config;
+package com.example.configuration;
 
 
-import com.example.config.jwt.AuthEntryPointJwt;
-import com.example.config.jwt.JwtFilter;
+import com.example.configuration.jwt.AuthEntryPointJwt;
+import com.example.configuration.jwt.JwtFilter;
 import com.example.controller.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

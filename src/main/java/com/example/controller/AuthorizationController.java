@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.config.jwt.JwtUtils;
+import com.example.configuration.jwt.JwtUtils;
 import com.example.dto.CommonResponse;
 import com.example.dto.auth.JwtResponse;
 import com.example.dto.auth.LoginRequest;

@@ -1,4 +1,4 @@
-package com.example.config;
+package com.example.configuration;
 
 
 import com.example.entity.User;
@@ -29,18 +29,17 @@ public class DataLoader implements CommandLineRunner {
     private String ddl;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (ddl.equalsIgnoreCase("create") || ddl.equalsIgnoreCase("create-drop")) {
-            roleRepo.save(new UserRole(Constants.USER_ROLE));
-            UserRole admin_role = roleRepo.save(new UserRole(Constants.ADMIN_ROLE));
+            UserRole userRole = roleRepo.save(new UserRole(Constants.USER_ROLE));
+            UserRole adminRole = roleRepo.save(new UserRole(Constants.ADMIN_ROLE));
 
             User user = new User();
             user.setFullName("administrator");
             user.setAbout("this is admin from the system");
             user.setUsername("admin");
             user.setPassword(passwordEncoder.encode("admin_1212"));
-            user.setRoles(new HashSet<>(List.of(roleRepo.findByName(Constants.ADMIN_ROLE).orElse(admin_role))));
-//            user.setId(UUID.randomUUID().toString());
+            user.setRoles(new HashSet<>(List.of(adminRole, userRole)));
             userRepo.save(user);
 
         }
