@@ -1,0 +1,13 @@
+server:
+  port: 2525
+
+spring:
+   datasource:
+     url: jdbc:postgresql://localhost:5432/postgres
+     password: root123
+     username: postgres
+
+   jpa:
+     generate-ddl: true
+     hibernate:
+       ddl-auto: update
