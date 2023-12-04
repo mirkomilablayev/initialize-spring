@@ -11,6 +11,8 @@ import com.example.exceptions.GenericException;
 import com.example.repository.RoleRepository;
 import com.example.repository.UserRepository;
 import com.example.util.Constants;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +29,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashSet;
 import java.util.Set;
 
+@Tag(name = "AUTHORIZATION-CONTROLLER", description = "Authorization management controller")
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthorizationController {
     private final AuthenticationManager authenticationManager;

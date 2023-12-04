@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Component
 public class JwtUtils {
-    private static final long expire = 1000 * 60 * 60;
+    private static final long expire = 1000 * 60 * 60 * 30;
     private static final String key = "AqishUsBAsusbaJs)a9s!s_-";
 
     public String generateToken(User user) {

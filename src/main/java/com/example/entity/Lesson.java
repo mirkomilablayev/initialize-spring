@@ -18,4 +18,6 @@ public class Lesson {
     private Long id;
     private String name;
     private Long videoId;
+    private String githubLink;
+    private Long lessonFileId;
 }

@@ -38,7 +38,7 @@ public class DataLoader implements CommandLineRunner {
             user.setFullName("administrator");
             user.setAbout("this is admin from the system");
             user.setUsername("admin");
-            user.setPassword(passwordEncoder.encode("admin_1212"));
+            user.setPassword(passwordEncoder.encode("admin"));
             user.setRoles(new HashSet<>(List.of(adminRole, userRole)));
             userRepo.save(user);
 
