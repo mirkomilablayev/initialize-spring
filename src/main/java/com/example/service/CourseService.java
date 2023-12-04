@@ -12,7 +12,7 @@ import com.example.entity.Lesson;
 import com.example.entity.Module;
 import com.example.entity.User;
 import com.example.exceptions.GenericException;
-import com.example.repository.CourseBuyerRepository;
+import com.example.repository.CourseEnrollmentRepository;
 import com.example.repository.CourseRepository;
 import com.example.repository.LessonRepository;
 import com.example.repository.ModuleRepository;
@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -35,7 +34,7 @@ public class CourseService {
     private final CourseRepository courseRepository;
     private final ModuleRepository moduleRepository;
     private final LessonRepository lessonRepository;
-    private final CourseBuyerRepository courseBuyerRepository;
+    private final CourseEnrollmentRepository courseEnrollmentRepository;
 
     private final FileService fileService;
 
@@ -100,7 +99,7 @@ public class CourseService {
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "Course not found!"));
         if (user.getId() == null) {
             userStatus = UserStatus.GUESS_USER;
-        } else if (courseBuyerRepository.existsByCourseIdAndUserId(course.getId(), user.getId()))
+        } else if (courseEnrollmentRepository.existsByCourseIdAndUserId(course.getId(), user.getId()))
             userStatus = UserStatus.AUTHORIZED_CLIENT_USER;
         else userStatus = UserStatus.AUTHORIZED_USER;
 
@@ -286,7 +285,7 @@ public class CourseService {
         } else {
             userStatus = UserStatus.AUTHORIZED_USER;
             Module module = moduleRepository.findById(lesson.getModuleId()).orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "Module not found!!"));
-            if (courseBuyerRepository.existsByCourseIdAndUserId(module.getCourseId(), user.getId())) {
+            if (courseEnrollmentRepository.existsByCourseIdAndUserId(module.getCourseId(), user.getId())) {
                 userStatus = UserStatus.AUTHORIZED_CLIENT_USER;
             }
         }

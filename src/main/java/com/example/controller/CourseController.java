@@ -16,7 +16,6 @@ import com.example.service.CourseService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,7 +44,7 @@ public class CourseController {
     }
 
     @PutMapping("/course/addCover")
-    public ResponseEntity<CommonResponse> addCoverPhoto(@RequestParam Long courseId,@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<CommonResponse> addCoverPhoto(@RequestParam Long courseId, @RequestParam("file") MultipartFile file) {
         return courseService.addCoverPhoto(courseId, file);
     }
 
@@ -65,8 +64,6 @@ public class CourseController {
         return courseService.getOneCourse(courseId);
     }
 
-
-    //======================= module ===============================
 
     @PostMapping("/module/create")
     public ResponseEntity<CommonResponse> createModule(@RequestBody CreateModuleDto createModuleDto) {
@@ -88,7 +85,6 @@ public class CourseController {
         return courseService.getAllModule();
     }
 
-    //====================== Lesson ================================
 
     @PostMapping("/lesson/create")
     public ResponseEntity<CommonResponse> createLesson(@RequestBody CreateLessonDto createLessonDto) {
@@ -104,10 +100,12 @@ public class CourseController {
     public ResponseEntity<CommonResponse> getOneLesson(@RequestParam Long lessonId) {
         return courseService.getOneLesson(lessonId);
     }
+
     @DeleteMapping("/lesson/delete")
     public ResponseEntity<CommonResponse> deleteLesson(@RequestBody DeleteLessonDto deleteLessonDto) {
         return courseService.deleteLesson(deleteLessonDto);
     }
+
     @PutMapping("/lesson/add-link")
     public ResponseEntity<CommonResponse> addLink(@RequestBody AddLinkDto addLinkDto) {
         return courseService.addLink(addLinkDto);
