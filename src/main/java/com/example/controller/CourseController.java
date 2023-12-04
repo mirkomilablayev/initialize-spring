@@ -1,17 +1,24 @@
 package com.example.controller;
 
 import com.example.dto.CommonResponse;
-import com.example.dto.course.CourseCreateDTO;
+import com.example.dto.course.CreateCourseDTO;
+import com.example.dto.course.DeleteCourseDto;
 import com.example.dto.course.EditCourseDTO;
 import com.example.dto.course.PublishCourseDTO;
+import com.example.dto.lesson.AddLinkDto;
+import com.example.dto.lesson.DeleteLessonDto;
+import com.example.dto.lesson.EditLessonDto;
+import com.example.dto.lesson.CreateLessonDto;
 import com.example.dto.module.DeleteModuleDTO;
 import com.example.dto.module.EditModuleDTO;
-import com.example.dto.module.ModuleCreateDto;
+import com.example.dto.module.CreateModuleDto;
 import com.example.service.CourseService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "COURSE-CONTROLLER", description = "Course management controller")
 @RestController
@@ -23,7 +30,7 @@ public class CourseController {
 
 
     @PostMapping("/course/create")
-    public ResponseEntity<CommonResponse> createCourse(@RequestBody CourseCreateDTO createDTO) {
+    public ResponseEntity<CommonResponse> createCourse(@RequestBody CreateCourseDTO createDTO) {
         return courseService.createCourse(createDTO);
     }
 
@@ -38,13 +45,13 @@ public class CourseController {
     }
 
     @PutMapping("/course/addCover")
-    public ResponseEntity<CommonResponse> addCoverPhoto() {
-        return courseService.addCoverPhoto();
+    public ResponseEntity<CommonResponse> addCoverPhoto(@RequestParam Long courseId,@RequestParam("file") MultipartFile file) {
+        return courseService.addCoverPhoto(courseId, file);
     }
 
     @DeleteMapping("/course/delete")
-    public ResponseEntity<CommonResponse> deleteCourse() {
-        return courseService.deleteCourse();
+    public ResponseEntity<CommonResponse> deleteCourse(@RequestBody DeleteCourseDto deleteCourseDto) {
+        return courseService.deleteCourse(deleteCourseDto);
     }
 
     @GetMapping("/course/all")
@@ -54,16 +61,16 @@ public class CourseController {
 
 
     @GetMapping("/course/one")
-    public ResponseEntity<CommonResponse> getOneCourse() {
-        return courseService.getOneCourse();
+    public ResponseEntity<CommonResponse> getOneCourse(@RequestParam Long courseId) {
+        return courseService.getOneCourse(courseId);
     }
 
 
     //======================= module ===============================
 
     @PostMapping("/module/create")
-    public ResponseEntity<CommonResponse> createModule(@RequestBody ModuleCreateDto moduleCreateDto) {
-        return courseService.createModule(moduleCreateDto);
+    public ResponseEntity<CommonResponse> createModule(@RequestBody CreateModuleDto createModuleDto) {
+        return courseService.createModule(createModuleDto);
     }
 
     @PutMapping("/module/edit")
@@ -84,53 +91,51 @@ public class CourseController {
     //====================== Lesson ================================
 
     @PostMapping("/lesson/create")
-    public ResponseEntity<CommonResponse> createLesson() {
-        return courseService.createLesson();
+    public ResponseEntity<CommonResponse> createLesson(@RequestBody CreateLessonDto createLessonDto) {
+        return courseService.createLesson(createLessonDto);
     }
 
     @PutMapping("/lesson/edit")
-    public ResponseEntity<CommonResponse> editLesson() {
-        return courseService.editLesson();
-    }
-
-    @DeleteMapping("/lesson/delete")
-    public ResponseEntity<CommonResponse> deleteLesson() {
-        return courseService.deleteLesson();
+    public ResponseEntity<CommonResponse> editLesson(@RequestBody EditLessonDto editLessonDto) {
+        return courseService.editLesson(editLessonDto);
     }
 
     @GetMapping("/lesson/one")
-    public ResponseEntity<CommonResponse> getOneLesson() {
-        return courseService.getOneLesson();
+    public ResponseEntity<CommonResponse> getOneLesson(@RequestParam Long lessonId) {
+        return courseService.getOneLesson(lessonId);
+    }
+    @DeleteMapping("/lesson/delete")
+    public ResponseEntity<CommonResponse> deleteLesson(@RequestBody DeleteLessonDto deleteLessonDto) {
+        return courseService.deleteLesson(deleteLessonDto);
+    }
+    @PutMapping("/lesson/add-link")
+    public ResponseEntity<CommonResponse> addLink(@RequestBody AddLinkDto addLinkDto) {
+        return courseService.addLink(addLinkDto);
     }
 
-    @PostMapping("/lesson/add-link")
-    public ResponseEntity<CommonResponse> addLink() {
-        return courseService.addLink();
+    @DeleteMapping("/lesson/delete-link/{lessonId}")
+    public ResponseEntity<CommonResponse> deleteLink(@PathVariable Long lessonId) {
+        return courseService.deleteLink(lessonId);
     }
 
-    @PostMapping("/lesson/delete-link")
-    public ResponseEntity<CommonResponse> deleteLink() {
-        return courseService.deleteLink();
+    @PutMapping("/lesson/add-file")
+    public ResponseEntity<CommonResponse> addFile(@RequestParam Long lessonId, @RequestParam("file") MultipartFile file) {
+        return courseService.addFile(lessonId, file);
     }
 
-    @PostMapping("/lesson/add-file")
-    public ResponseEntity<CommonResponse> addFile() {
-        return courseService.addFile();
+    @DeleteMapping("/lesson/delete-file")
+    public ResponseEntity<CommonResponse> deleteFile(@RequestParam Long courseId) {
+        return courseService.deleteFile(courseId);
     }
 
-    @PostMapping("/lesson/delete-file")
-    public ResponseEntity<CommonResponse> deleteFile() {
-        return courseService.deleteFile();
+    @PutMapping("/lesson/add-video")
+    public ResponseEntity<CommonResponse> addVideo(@RequestParam Long lessonId, @RequestParam("file") MultipartFile file) {
+        return courseService.addVideo(lessonId, file);
     }
 
-    @PostMapping("/lesson/add-video")
-    public ResponseEntity<CommonResponse> addVideo() {
-        return courseService.addVideo();
-    }
-
-    @PostMapping("/lesson/delete-video")
-    public ResponseEntity<CommonResponse> deleteVideo() {
-        return courseService.deleteVideo();
+    @DeleteMapping("/lesson/delete-video")
+    public ResponseEntity<CommonResponse> deleteVideo(@RequestParam Long lessonId) {
+        return courseService.deleteVideo(lessonId);
     }
 
 

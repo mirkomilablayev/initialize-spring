@@ -17,13 +17,11 @@ public class SignupRequest {
     @Min(2)
     private String fullName;
     @NotBlank
-    @Min(5)
-    @Max(15)
+    @Size(min = 5, max = 30)
     private String username;
-    @Min(5)
-    @Max(15)
+
     @NotBlank
+    @Size(min = 5, max = 30)
     private String password;
 
-    private String about;
 }

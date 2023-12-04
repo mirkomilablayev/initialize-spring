@@ -1,6 +1,6 @@
-package com.example.entity;
+package com.example.dto.course;
 
-import jakarta.persistence.*;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,17 +10,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity(name = "course_buyers")
-public class CourseBuyer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @NotNull
-    @NotBlank
-    private Long userId;
-    @NotNull
-    @NotBlank
-    private Long courseId;
+public class CreateCourseDTO {
 
+    @NotNull
+    private String name;
+    @NotNull
+    private String description;
+    @NotBlank
+    private Long price;
 
 }

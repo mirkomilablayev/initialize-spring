@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -28,6 +29,9 @@ import java.nio.file.Paths;
 @Slf4j
 @RequiredArgsConstructor
 public class FileService {
+
+    @Value(value = "${app.save-file-path}")
+    private String FILE_SAVE_PATH;
 
     private final FileRepository fileRepository;
 
@@ -152,10 +156,9 @@ public class FileService {
     }
 
     private String filePathBuilder(MultipartFile file) {
-        String path = "/root/prodigital/savedfiles";
-//        String path = "C:\\SavedFile";
-        path = path + java.io.File.separator + (isImage(file) ? "image" : isVideo(file) ? "video" : "other");
-        Path directory = Paths.get(path);
+
+        FILE_SAVE_PATH = FILE_SAVE_PATH + java.io.File.separator + (isImage(file) ? "image" : isVideo(file) ? "video" : "other");
+        Path directory = Paths.get(FILE_SAVE_PATH);
 
         try {
             if (Files.notExists(directory)) {
@@ -164,7 +167,7 @@ public class FileService {
             } else {
                 log.info("Directory already exists: " + directory);
             }
-            return path;
+            return FILE_SAVE_PATH;
         } catch (IOException ex) {
             log.error("Failed to create directory: " + directory, ex);
             throw new GenericException(ex.getMessage());
@@ -179,6 +182,7 @@ public class FileService {
             fileRepository.deleteById(fileId);
         } catch (Exception e) {
             log.info("Failed to delete file in ID={}", fileId);
+            throw new GenericException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete file in ID=" + fileId);
         }
     }
 

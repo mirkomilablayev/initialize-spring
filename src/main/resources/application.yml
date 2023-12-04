@@ -10,8 +10,11 @@ spring:
    jpa:
      generate-ddl: true
      hibernate:
-       ddl-auto: create
+       ddl-auto: none
+     show-sql: true
 
+app:
+  save-file-path: C:\Users\mirkomil_a\saved
 
 springdoc:
   packages-to-scan: com.example.controller

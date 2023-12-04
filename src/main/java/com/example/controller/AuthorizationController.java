@@ -65,7 +65,6 @@ public class AuthorizationController {
         User user = new User();
         user.setPassword(encoder.encode(signUpRequest.getPassword()));
         user.setUsername(signUpRequest.getUsername());
-        user.setAbout(signUpRequest.getAbout());
         user.setFullName(signUpRequest.getFullName());
         Set<UserRole> roles = new HashSet<>();
 

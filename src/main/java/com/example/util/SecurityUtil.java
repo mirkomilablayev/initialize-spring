@@ -41,7 +41,11 @@ public class SecurityUtil {
     }
 
     public static User getAuthorizedUser() {
-        return getCurrentUser();
+        try {
+            return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e) {
+            return new User();
+        }
     }
 
 

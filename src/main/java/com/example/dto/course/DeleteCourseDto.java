@@ -1,4 +1,4 @@
-package com.example.dto.lesson;
+package com.example.dto.course;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class LessonCreateDto {
-    private String name;
-    private String githubLink;
+public class DeleteCourseDto {
+    private Long id;
 }

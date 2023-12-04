@@ -1,6 +1,9 @@
 package com.example.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,10 +23,19 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Column(unique = true, nullable = false)
     private String username;
+
+
+    @NotBlank
+    @Column(nullable = false)
     private String password;
+
+    @NotBlank
+    @Column(nullable = false)
     private String fullName;
-    private String about;
+
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<UserRole> roles;
 
@@ -38,7 +50,6 @@ public class User implements UserDetails {
                 user.getUsername(),
                 user.getPassword(),
                 user.fullName,
-                user.getAbout(),
                 authorities);
     }
 

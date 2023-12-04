@@ -1,4 +1,4 @@
-package com.example.dto.module;
+package com.example.dto.lesson;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ModuleCreateDto {
-
-    private Long courseId;
+public class LessonDto {
+    private Long id;
     private String name;
-
+    private Boolean isVisible = false;
 }
