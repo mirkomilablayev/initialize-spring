@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
-public class OpenAiConfig {
+public class SwaggerOpenAiConfig {
 
     @Bean
-    public OpenAPI myOpenApi() {
+    public OpenAPI swaggerOpenApi() {
 
         Server server = new Server();
         server.setUrl("http://localhost:2525/");

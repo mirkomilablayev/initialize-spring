@@ -12,7 +12,7 @@ import com.example.entity.Lesson;
 import com.example.entity.Module;
 import com.example.entity.User;
 import com.example.exceptions.GenericException;
-import com.example.repository.CourseEnrollmentRepository;
+import com.example.repository.EnrollmentRepository;
 import com.example.repository.CourseRepository;
 import com.example.repository.LessonRepository;
 import com.example.repository.ModuleRepository;
@@ -34,12 +34,10 @@ public class CourseService {
     private final CourseRepository courseRepository;
     private final ModuleRepository moduleRepository;
     private final LessonRepository lessonRepository;
-    private final CourseEnrollmentRepository courseEnrollmentRepository;
-
+    private final EnrollmentRepository enrollmentRepository;
     private final FileService fileService;
 
 
-    //create course
     public ResponseEntity<CommonResponse> createCourse(CreateCourseDTO createDTO) {
         SecurityUtil.checkAdmin();
         Course course = new Course();
@@ -99,7 +97,7 @@ public class CourseService {
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "Course not found!"));
         if (user.getId() == null) {
             userStatus = UserStatus.GUESS_USER;
-        } else if (courseEnrollmentRepository.existsByCourseIdAndUserId(course.getId(), user.getId()))
+        } else if (enrollmentRepository.existsByCourseIdAndUserId(course.getId(), user.getId()))
             userStatus = UserStatus.AUTHORIZED_CLIENT_USER;
         else userStatus = UserStatus.AUTHORIZED_USER;
 
@@ -175,9 +173,12 @@ public class CourseService {
     }
 
     public ResponseEntity<CommonResponse> deleteModule(DeleteModuleDTO deleteModuleDTO) {
-        // TODO: 04.12.2023 needs to do
         SecurityUtil.checkAdmin();
-        return null;
+        if (!lessonRepository.findAllByModuleId(deleteModuleDTO.getId()).isEmpty()) {
+            throw new GenericException("Module cannot deleted!");
+        }
+        moduleRepository.deleteById(deleteModuleDTO.getId());
+        return ResponseEntity.ok(new CommonResponse("Module is successfully deleted!"));
     }
 
     public ResponseEntity<CommonResponse> getAllModule() {
@@ -187,7 +188,6 @@ public class CourseService {
     }
 
 
-    //=====================  lesson  ========================
     public ResponseEntity<CommonResponse> createLesson(CreateLessonDto createLessonDto) {
         SecurityUtil.checkAdmin();
 
@@ -285,7 +285,7 @@ public class CourseService {
         } else {
             userStatus = UserStatus.AUTHORIZED_USER;
             Module module = moduleRepository.findById(lesson.getModuleId()).orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "Module not found!!"));
-            if (courseEnrollmentRepository.existsByCourseIdAndUserId(module.getCourseId(), user.getId())) {
+            if (enrollmentRepository.existsByCourseIdAndUserId(module.getCourseId(), user.getId())) {
                 userStatus = UserStatus.AUTHORIZED_CLIENT_USER;
             }
         }

@@ -2,7 +2,7 @@ package com.example.service;
 
 
 import com.example.dto.CommonResponse;
-import com.example.repository.CourseEnrollmentRepository;
+import com.example.repository.EnrollmentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CourseBuyerService {
 
-    private final CourseEnrollmentRepository courseEnrollmentRepository;
+    private final EnrollmentRepository enrollmentRepository;
 
     public ResponseEntity<CommonResponse> createBuyer() {
         return null;
